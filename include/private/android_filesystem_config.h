@@ -78,6 +78,7 @@
 #define AID_NET_BW_ACCT   3007  /* change bandwidth statistics accounting */
 #define AID_NET_BT_STACK  3008  /* bluetooth: access config files */
 #define AID_QCOM_ONCRPC   3008  /* can read/write /dev/oncrpc files */
+#define AID_QCOM_DIAG     3009  /* can read/write /dev/diag */
 
 #if defined(MOTOROLA_UIDS)
 #define AID_MOT_OSH       5000  /* OSH */
@@ -155,6 +156,7 @@ static const struct android_id_info android_ids[] = {
     { "net_bw_stats", AID_NET_BW_STATS, },
     { "net_bw_acct", AID_NET_BW_ACCT, },
     { "qcom_oncrpc", AID_QCOM_ONCRPC, },
+    { "qcom_diag", AID_QCOM_DIAG, },
 #if defined(MOTOROLA_UIDS)
     { "mot_osh",   AID_MOT_OSH, },
     { "mot_accy",  AID_MOT_ACCY, },
