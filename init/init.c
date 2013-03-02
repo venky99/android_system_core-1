@@ -67,6 +67,9 @@ struct selabel_handle *sehandle_prop;
 #endif
 
 static int property_triggers_enabled = 0;
+#ifdef BOARD_USE_MOTOROLA_DEV_ALIAS
+static int device_triggers_enabled = 0;
+#endif
 
 #if BOOTCHART
 static int   bootchart_count;
@@ -584,6 +587,16 @@ void execute_one_command(void)
     INFO("command '%s' r=%d\n", cur_command->args[0], ret);
 }
 
+#ifdef BOARD_USE_MOTOROLA_DEV_ALIAS
+void device_changed(const char *name, int is_add)
+{
+    if (device_triggers_enabled) {
+        queue_device_triggers(name, is_add);
+	execute_one_command();
+    }
+}
+#endif
+
 static int wait_for_coldboot_done_action(int nargs, char **args)
 {
     int ret;
@@ -917,6 +930,11 @@ int main(int argc, char **argv)
          * together in the initramdisk on / and then we'll
          * let the rc file figure out the rest.
          */
+    /* Don't repeat the setup of these filesystems,
+     * it creates double mount points with an unknown effect
+     * on the system.  This init file is for 2nd-init anyway.
+     */
+#ifndef NO_DEVFS_SETUP
     mkdir("/dev", 0755);
     mkdir("/proc", 0755);
     mkdir("/sys", 0755);
@@ -939,6 +957,7 @@ int main(int argc, char **argv)
          */
     open_devnull_stdio();
     klog_init();
+#endif
     property_init();
 
     get_hardware_name(hardware, &revision);
@@ -1033,6 +1052,12 @@ int main(int argc, char **argv)
         action_for_each_trigger("early-boot", action_add_queue_tail);
         action_for_each_trigger("boot", action_add_queue_tail);
     }
+
+#ifdef BOARD_USE_MOTOROLA_DEV_ALIAS
+    queue_all_device_triggers();
+    execute_one_command();
+    device_triggers_enabled = 1;
+#endif
 
         /* run all property triggers based on current state of the properties */
     queue_builtin_action(queue_property_triggers_action, "queue_property_triggers");
