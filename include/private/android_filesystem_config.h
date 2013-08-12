@@ -62,6 +62,12 @@
 #define AID_DRMRPC        1026  /* group for drm rpc */
 #define AID_NFC           1027  /* nfc subsystem */
 #define AID_SDCARD_R      1028  /* external storage read access */
+#define AID_AUDIT         1031  /* audit daemon */
+#ifdef QCOM_FM_ENABLED
+#define AID_FM_RADIO      1029  /* FM radio */
+#endif
+
+#define AID_THEMEMAN      1300  /* theme manager */
 
 #define AID_SHELL         2000  /* adb and debug shell user */
 #define AID_CACHE         2001  /* cache access */
@@ -173,6 +179,9 @@ static const struct android_id_info android_ids[] = {
     { "mot_dlna",  AID_MOT_DLNA, },
 #endif
     { "misc",      AID_MISC, },
+#ifdef QCOM_FM_ENABLED
+    { "fm_radio",  AID_FM_RADIO, },
+#endif
     { "nobody",    AID_NOBODY, },
 };
 

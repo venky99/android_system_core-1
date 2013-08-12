@@ -99,6 +99,9 @@ struct {
     { "persist.security.", AID_SYSTEM,   0 },
     { "persist.service.bdroid.", AID_BLUETOOTH,   0 },
     { "selinux."         , AID_SYSTEM,   0 },
+#ifdef QCOM_FM_ENABLED
+    { "hw.fm.",           AID_FM_RADIO,  0 },
+#endif
     { "net.pdp",          AID_RADIO,    AID_RADIO },
     { "service.bootanim.exit", AID_GRAPHICS, 0 },
 #ifdef PROPERTY_PERMS_APPEND
@@ -121,6 +124,9 @@ struct {
 } control_perms[] = {
     { "dumpstate",AID_SHELL, AID_LOG },
     { "ril-daemon",AID_RADIO, AID_RADIO },
+#ifdef QCOM_FM_ENABLED
+    { "fm_dl", AID_FM_RADIO, AID_FM_RADIO},
+#endif
 #ifdef CONTROL_PERMS_APPEND
 CONTROL_PERMS_APPEND
 #endif
