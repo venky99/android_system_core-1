@@ -71,6 +71,9 @@
 #define AID_SDCARD_R      1028  /* external storage read access */
 #define AID_CLAT          1029  /* clat part of nat464 */
 #define AID_AUDIT         1031  /* audit daemon */
+#ifdef QCOM_FM_ENABLED
+#define AID_FM_RADIO      1029  /* FM radio */
+#endif
 
 #define AID_THEMEMAN      1300  /* theme manager */
 
@@ -184,6 +187,9 @@ static const struct android_id_info android_ids[] = {
     { "mot_dlna",  AID_MOT_DLNA, },
 #endif
     { "misc",      AID_MISC, },
+#ifdef QCOM_FM_ENABLED
+    { "fm_radio",  AID_FM_RADIO, },
+#endif
     { "nobody",    AID_NOBODY, },
     { "clat",      AID_CLAT, },
     { "theme_man", AID_THEMEMAN },
